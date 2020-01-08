@@ -15,7 +15,15 @@ public interface UserMapper {
 	 * @return: List<User>
 	 */
 	List<User> selects(User user);
-	
+	/**
+	 * 
+	 * @Title: update 
+	 * @Description:修改
+	 * @param user
+	 * @return
+	 * @return: int
+	 */
+	int update(User user);
 	
 	
 }

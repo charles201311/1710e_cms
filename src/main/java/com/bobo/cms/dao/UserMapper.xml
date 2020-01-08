@@ -3,15 +3,53 @@
 <mapper namespace="com.bobo.cms.dao.UserMapper">
 
 
-<select id="selects" resultType="User">
-   select * from cms_user
-   <where>
-    <if test="username!=null and username!=''">
-      username like "%"#{username}"%"
-    </if>
-    <if test="locked!=null">
-     and locked=#{locked}
-    </if>
-   </where>
-</select>
+	<select id="selects" resultType="User">
+		select * from cms_user
+		<where>
+			<if test="username!=null and username!=''">
+				username like "%"#{username}"%"
+			</if>
+			<if test="locked!=null">
+				and locked=#{locked}
+			</if>
+		</where>
+	</select>
+	<!-- 修改用户 -->
+	<update id="update">
+		update cms_user
+		<trim prefix="set" suffix="where id =#{id}" suffixOverrides=",">
+			<if test="nickname!=null and nickname!=''">
+				nickname =#{nickname},
+			</if>
+			<if test="password!=null and password!=''">
+				password =#{password},
+			</if>
+
+			<if test="locked!=null">
+				locked =#{locked},
+			</if>
+
+			<if test="password!=null and password!=''">
+				password =#{password},
+			</if>
+
+			<if test="updated!=null and updated=''">
+				updated =#{updated},
+			</if>
+
+			<if test="birthday!=null and birthday=''">
+				birthday =#{birthday},
+			</if>
+			<if test="gender!=null">
+				gender =#{gender}
+			</if>
+		</trim>
+
+	</update>
+	
+	<!-- 根据ID 返回user对象 -->
+	<select id="select" resultType="User">
+	select * from cms_user where id=#{id}
+	
+	</select>
 </mapper>

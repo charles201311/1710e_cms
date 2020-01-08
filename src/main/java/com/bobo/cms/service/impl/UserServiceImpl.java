@@ -25,4 +25,10 @@ public class UserServiceImpl implements UserService {
 		return new PageInfo<User>(list);
 	}
 
+	@Override
+	public boolean update(User user) {
+		// TODO Auto-generated method stub
+		return userMapper.update(user)>0;
+	}
+
 }

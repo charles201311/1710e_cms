@@ -7,4 +7,14 @@ public interface UserService {
 
 	
 	PageInfo<User> selects(User user,Integer page,Integer pageSize);
+	
+	/**
+	 * 
+	 * @Title: update 
+	 * @Description:修改
+	 * @param user
+	 * @return
+	 * @return: int
+	 */
+	boolean update(User user);
 }

@@ -28,16 +28,10 @@ public class Article implements Serializable {
     private Integer categoryId;
 
     private Integer userId;
-    
-    private User user;//发布人
-    
 
 	private String content;//文章内容
 
     private String summary;//文章摘要
-    
-    private Channel channel;//栏目
-    private Category category;//分类
 
     private Integer hits;
 
@@ -56,6 +50,12 @@ public class Article implements Serializable {
     private String keywords;
 
     private String original;
+    
+    
+    
+    private User user;//发布人
+    private Channel channel;//栏目
+    private Category category;//分类
 
 	public Integer getId() {
 		return id;

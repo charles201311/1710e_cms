@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bobo.cms.dao.ChannelMapper">
+
+
+  <select id="select" resultType="Channel">
+  
+  select * from cms_channel where id=#{id}
+  
+  </select>
+	
+</mapper>

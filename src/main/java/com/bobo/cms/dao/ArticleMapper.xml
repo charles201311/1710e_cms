@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bobo.cms.dao.ArticleMapper">
+
+
+  <resultMap type="Article" id="articleMap">
+    <id column="id" property="id"/>
+    <result column="title" property="title"/>
+    <result column="channel_Id" property="channelId"/>
+    <result column="category_Id" property="categoryId"/>
+    <result column="picture" property="picture"/>
+    <result column="user_Id" property="userId"/>
+    <result column="title" property="title"/>
+    <result column="content" property="content"/>
+    <result column="summary" property="summary"/>
+    <result column="hits" property="hits"/>
+    <result column="status" property="status"/>
+    <result column="hot" property="hot"/>
+    <result column="deleted" property="deleted"/>
+    <result column="created" property="created"/>
+    <result column="contentType" property="contentType"/>
+    <result column="keywords" property="keywords"/>
+    <result column="original" property="original"/>
+    <!-- 映射一对一关系 文章发布人-->
+    <association property="user" select="com.bobo.cms.dao.UserMapper.select" column="user_id" />
+     <!-- 映射一对一关系 文章所属栏目-->
+     <association property="channel" select="com.bobo.cms.dao.ChannelMapper.select" column="channel_Id"/>
+  </resultMap>
+
+  <select id="selects" resultMap="articleMap">
+  
+  select * from cms_article 
+  <where>
+   <if test="title!=null and title !=''">
+   
+    title like "%"#{title}"%"
+   
+   </if>
+    <if test="status!=null">
+   
+     and status = #{status}
+   
+   </if>
+  
+  </where>
+  
+  order by created desc
+  
+  
+  </select>
+  
+  <update id="update">
+   update cms_article 
+   <trim prefix="set"  suffix="where id =#{id}"  suffixOverrides=",">
+    <if test="content!=null and content!=''">
+    content =#{content},
+    </if>
+    <if test="hot!=null">
+     hot =#{hot},
+    </if>
+    <if test="status!=null">
+     status =#{status},
+    </if>
+     <if test="deleted!=null">
+     deleted =#{deleted},
+    </if>
+     <if test="updated!=null and updated!=''">
+     updated =#{updated},
+    </if>
+      <if test="title!=null and title!=''">
+     title =#{title},
+    </if>
+   </trim>
+  
+  </update>
+  
+  <select id="select" resultMap="articleMap">
+  
+  select * from cms_article where id=#{id}
+  
+  </select>
+	
+</mapper>

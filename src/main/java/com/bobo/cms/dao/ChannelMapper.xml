@@ -8,5 +8,17 @@
   select * from cms_channel where id=#{id}
   
   </select>
+  
+   <select id="selects" resultType="Channel">
+  
+  select * from cms_channel 
+  
+  </select>
+  
+  <select id="selectsByCid" resultType="Category">
+  
+  select * from cms_category where  channel_id =#{id}
+  </select>
+  
 	
 </mapper>

@@ -35,4 +35,14 @@ public interface ArticleService {
 	 * @return: Article
 	 */
 	Article select(Integer id);
+	
+	/**
+	 * 
+	 * @Title: insert 
+	 * @Description: 增加文章
+	 * @param article
+	 * @return
+	 * @return: int
+	 */
+	boolean insert(Article article);
 }

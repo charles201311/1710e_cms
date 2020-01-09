@@ -79,5 +79,15 @@
   select * from cms_article where id=#{id}
   
   </select>
+  
+  <insert id="insert" >
+  insert into cms_article(title,content,summary,user_id,channel_id,category_id,created,updated,
+  hits,hot,deleted,status,content_type,picture)
+  values(#{title},#{content},#{summary},#{userId},#{channelId},#{categoryId},
+  #{created},#{updated},#{hits},#{hot},#{deleted},#{status},#{contentType},#{picture})
+  
+  
+  
+  </insert>
 	
 </mapper>

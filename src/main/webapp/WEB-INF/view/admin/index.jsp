@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+ <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <title>天天头条管理员后台系统</title>
 <!-- 引入 css -->
@@ -37,7 +37,7 @@
 				</nav>
 			</div>
              <!-- 中间区域 -->
-			<div class="col-md-10" id="center">
+			<div class="col-md-10" id="center" style="padding-right: 0px" >
 			
 			</div>
 

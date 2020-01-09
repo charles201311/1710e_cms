@@ -254,7 +254,7 @@
 							<!-- 虚拟路径 访问路径 -->
 							<contextPath>/pic/</contextPath>
 							<!-- 物理路径 -->
-							<resourceBase>d:/week1/</resourceBase>
+							<resourceBase>d:/pic/</resourceBase>
 						</jettyWebAppContext>
 					</contextHandlers>
 

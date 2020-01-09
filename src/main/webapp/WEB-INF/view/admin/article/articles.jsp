@@ -68,10 +68,12 @@
 	
 	
 </script>
+
+
 </head>
 
-<body class="container">
-	<div>
+<body >
+	<div class="container">
 		<form id="form1">
 			文章标题:<input type="text" name="title" value="${article.title }">
 			状态：<select name="status">
@@ -89,13 +91,13 @@
 	<table class="table table-hover table-striped table-bordered" style="text-align: center;">
 		<tr>
 			<td>序号</td>
-			<td>文章标题</td>
+			<td width="300px">文章标题</td>
 			<td>作者</td>
 			<td>发布时间</td>
 			<td>文章状态</td>
 			<td>所属栏目</td>
 			<td>热门文章</td>
-			<td>详情</td>
+			<td>详 情</td>
 		</tr>
 
 		<c:forEach items="${info.list}" var="article" varStatus="i">

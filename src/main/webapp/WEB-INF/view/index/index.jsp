@@ -1,0 +1,162 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>天天头条</title>
+<!-- 引入 css -->
+<link rel="stylesheet" type="text/css"
+	href="/resource/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="/resource/css/index.css">
+<!-- 引入js -->
+<script type="text/javascript" src="/resource/js/jquery-3.2.1.js"></script>
+</head>
+<body>
+	<div class="container-fluid">
+
+		<div class="row">
+			<div class="col-md-12"
+				style="background-color: #222222; height: 34px; padding-top: 5px; font-size: 14px">
+				<a href="#"><font color="white">下载APP</font></a>
+			</div>
+
+		</div>
+
+		<div class="row" style="margin-top: 5px">
+			<!-- 左侧栏目菜单 -->
+			<div class="col-md-2">
+				<ul>
+					<li><a class="channel-item" href="#"><img
+							src="/resource/images/logo-index.png" height="27" width="108">
+					</a></li>
+
+					<li><a class="channel-item ${article.channelId==null?"
+						active":"" }" href="/?hot=1">热点文章</a></li>
+					<c:forEach items="${channels}" var="channel">
+						<li><a class="channel-item  ${article.channelId==channel.id?"
+							active":"" }" href="/?channelId=${channel.id }">${channel.name }</a></li>
+					</c:forEach>
+
+				</ul>
+
+
+			</div>
+			<!-- 中间区域 -->
+			<div class="col-md-7">
+			<!--如果热点不空则显示热点 -->
+			<c:if test="${article.channelId==null}">
+			  
+			    <c:forEach items="${info.list}" var="article">
+						<div class="media">
+							<img src="/pic/${article.picture}"
+								class="align-self-center mr-3 rounded" alt="..." width="156px"
+								height="101.8">
+							<div class="media-body">
+								<h5 class="mt-0">
+									<a href="/articleDetail?id=${article.id }" target="_blank">${article.title }</a>
+								</h5>
+								<p>${article.summary }</p>
+								<p>
+									<fmt:formatDate value="${article.created }"
+										pattern="yyyy-MM-dd HH:mm:ss" />
+									0 评论
+								</p>
+							</div>
+						</div>
+						<hr>
+					</c:forEach>
+					
+					<jsp:include page="/WEB-INF/view/common/pages.jsp"></jsp:include>
+			
+			</c:if>
+			<!-- 如果热点为空则显示分类文章 -->
+			<c:if test="${article.channelId!=null}">
+				<!-- 栏目下分类菜单 -->
+				<div class="subchannel">
+					<ul class="sub-list" style="width: 660px;">
+						<li class="sub-item ${article.categoryId==null?"sub-selected":"" }"><a
+							href="/?channelId=${article.channelId}">全部</a></li>
+						<c:forEach items="${categorys}" var="category">
+
+							<li class="sub-item ${article.categoryId==category.id?"sub-selected":"" }"><a
+								href="/?channelId=${article.channelId}&categoryId=${category.id}">${category.name }</a></li>
+						</c:forEach>
+
+					</ul>
+					<hr>
+
+				</div>
+				<!-- 分类文章 -->
+				<div>
+					<c:forEach items="${info.list}" var="article">
+						<div class="media">
+							<img src="/pic/${article.picture}"
+								class="align-self-center mr-3 rounded" alt="..." width="156px"
+								height="101.8">
+							<div class="media-body">
+								<h5 class="mt-0">
+									<a href="/articleDetail?id=${article.id }" target="_blank">${article.title }</a>
+								</h5>
+								<p>${article.summary }</p>
+								<p>
+									<fmt:formatDate value="${article.created }"
+										pattern="yyyy-MM-dd HH:mm:ss" />
+									0 评论
+								</p>
+							</div>
+						</div>
+						<hr>
+					</c:forEach>
+					<jsp:include page="/WEB-INF/view/common/pages.jsp"></jsp:include>
+				</div>
+
+              </c:if>
+
+			</div>
+			<!-- 右侧区域 -->
+			<div class="col-md-3">
+
+
+				<div class="card" style="width: 18rem;">
+					<div class="card-header" style="text-align: center;">最新文章</div>
+					<div class="card-body">
+						<c:forEach items="${lastInfo.list}" var="lastArticle">
+							<ul class="list-unstyled">
+								<li class="media"><img src="/pic/${lastArticle.picture }"
+									class="mr-3" alt="..." width="60" height="60">
+									<div class="media-body">
+										<p style="font-size: 14px"><a href="/articleDetail?id=${lastArticle.id}" target="_blank">${lastArticle.title }</a></p>
+									</div></li>
+
+							</ul>
+							<hr>
+						</c:forEach>
+					</div>
+
+
+				</div>
+
+
+
+			</div>
+
+
+		</div>
+
+
+	</div>
+
+	<script type="text/javascript">
+		function goPage(page) {
+			var channelId = '${article.channelId}';
+			var categoryId = '${article.categoryId}';
+			location.href = "/?page=" + page + "&channelId=" + channelId
+					+ "&categoryId=" + categoryId
+		}
+	</script>
+</body>
+</html>

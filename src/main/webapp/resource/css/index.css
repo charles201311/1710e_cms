@@ -34,4 +34,30 @@ a:visited {
     background-color: rgb(237, 64, 64);
     color: rgb(255, 255, 255);
 }
+li {
+	list-style: none;
+}
 
+
+.subchannel .sub-list {
+    top: -50px;
+    background: #fff;
+    height: 38px;
+  /*   border-bottom: 2px solid #f2f2f2; */
+}
+
+.subchannel .sub-item {
+    line-height: 38px;
+    font-size: 16px;
+    display: inline-block;
+    color: #444;
+    margin-left: 33px;
+    background: #fff;
+}
+.subchannel .sub-selected {
+    color: #f85959;
+    border-bottom: 2px solid #f85959;
+}
+.subchannel .sub-item:first-child {
+    margin-left: 0!important;
+}

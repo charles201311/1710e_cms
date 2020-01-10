@@ -29,6 +29,11 @@ function articleDetail(id){
 	})
 	
 }
+$(function(){
+	$("[name='status']").change(function(){
+		query();
+	})
+})
 
 function query(){
 	//获取选中单选框的值
@@ -60,9 +65,9 @@ $("[name='status'][value='"+checked+"']").prop("checked",true);
 			<input type="radio" class="form-check-input" name="status" value="9"
 				id="ck9"><label class="form-check-label" for="ck9">驳回</label>
 		</div>
-		<div>
-			<button class="btn btn-warning" type="button" onclick="query()">查询</button>
-		</div>
+		<!-- <div>
+			<button class="btn btn-primary" type="button" onclick="query()">查询</button>
+		</div> -->
 		
 		</div>
 		<hr>

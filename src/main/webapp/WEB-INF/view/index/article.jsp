@@ -6,8 +6,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"
-<title></title>
+<title>${article.title }</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no"
 <!-- 引入 css -->
 <link rel="stylesheet" type="text/css"
 	href="/resource/css/bootstrap.css">
@@ -18,8 +19,16 @@
 </head>
 
 <body class="container">
-	dfdsfsfsadfdasdf
-</div>
+	<div>
+		<h2>${article.title }</h2>
+		<p>${article.user.username} <fmt:formatDate value="${article.created }" pattern="yyyy-MM-dd HH:mm:ss"/> </p>
+	</div>
+
+	<hr>
+	<div>${article.content }</div>
+
+
+	</div>
 </body>
 
 </html>

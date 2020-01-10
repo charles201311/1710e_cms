@@ -41,6 +41,18 @@
      and status = #{status}
    
    </if>
+   
+      <if test="channelId!=null">
+   
+     and channel_Id = #{channelId}
+   
+   </if>
+      <if test="categoryId!=null">
+   
+     and category_Id = #{categoryId}
+   
+   </if>
+   
   
   </where>
   

@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>个人中心</title>
+<title>天天头条个人中心</title>
 <!-- 引入 css -->
 <link rel="stylesheet" type="text/css"
 	href="/resource/css/bootstrap.css">
@@ -31,7 +31,7 @@
   </script>
 </head>
 <body>
-	<div class="container-fluid">
+	<div class="container-fluid"  style="padding-top: 10px">
 
 		<div class="row">
 

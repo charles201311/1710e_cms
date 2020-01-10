@@ -16,15 +16,18 @@
 	src="${pageContext.request.contextPath}/resource/js/jquery-3.2.1.js"></script>
 </head>
 <body>
-	<div class="container" style="padding-top: 10px">
-		<!-- 头 -->
+  
+	<div class="container-fluid" style="padding-top: 10px">
+	<!-- 头 -->
 		<div class="row rounded" style="background-color: #009FD9; height: 55px">
 			<div class="col-md-12"><img alt="" src="/resource/images/logo.png"
-				style="width: 55px; height: 55px"><font color="white">管理员后台系统</font>
+				style="width: 55px; height: 55px" class="rounded-circle"><font color="white">管理员后台系统</font>
 				<div style="float: right;padding-top: 10px"> <a href=""><font style="color: white"> 注销</font></a></div>
 				</div>
 		  
 		</div>
+	<div class="container-fluid" style="padding-top: 5px">
+		
 		
 		<div class="row" style="padding-top: 10px">
 			<div class="col-md-2 rounded" style="background-color: #ccc;text-align: center;padding-top: 5px">

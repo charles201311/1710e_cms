@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.bobo.cms.domain.Article;
 import com.bobo.cms.domain.Category;
 import com.bobo.cms.domain.Channel;
+import com.bobo.cms.domain.Slide;
 import com.bobo.cms.service.ArticleService;
 import com.bobo.cms.service.ChannelService;
+import com.bobo.cms.service.SlideService;
 import com.github.pagehelper.PageInfo;
 
 @Controller
@@ -24,6 +26,9 @@ public class IndexController {
 	
 	@Resource
 	private ArticleService articleService;
+	
+	@Resource
+	private SlideService slideService;
 	
 	@RequestMapping(value = {"","/","index"})
 	public String index(Model model,Article article,@RequestParam(defaultValue = "1")Integer page,
@@ -47,6 +52,9 @@ public class IndexController {
 	       //显示热点文章
 			PageInfo<Article> hotInfo = articleService.selects(article, page, pageSize);
 			model.addAttribute("info", hotInfo);
+			//查询广告
+			List<Slide> slides = slideService.selects();
+			model.addAttribute("slides",slides);
 		}
 		
 		

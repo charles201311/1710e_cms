@@ -14,6 +14,8 @@
 <link rel="stylesheet" type="text/css" href="/resource/css/index.css">
 <!-- 引入js -->
 <script type="text/javascript" src="/resource/js/jquery-3.2.1.js"></script>
+<!-- 引入js -->
+<script type="text/javascript" src="/resource/js/bootstrap.min.js"></script>
 </head>
 <body>
 	<div class="container-fluid">
@@ -47,51 +49,48 @@
 			</div>
 			<!-- 中间区域 -->
 			<div class="col-md-7">
-			<!--如果热点不空则显示热点 -->
-			<c:if test="${article.channelId==null}">
-			  
-			    <c:forEach items="${info.list}" var="article">
-						<div class="media">
-							<img src="/pic/${article.picture}"
-								class="align-self-center mr-3 rounded" alt="..." width="156px"
-								height="101.8">
-							<div class="media-body">
-								<h5 class="mt-0">
-									<a href="/articleDetail?id=${article.id }" target="_blank">${article.title }</a>
-								</h5>
-								<p>${article.summary }</p>
-								<p>
-									<fmt:formatDate value="${article.created }"
-										pattern="yyyy-MM-dd HH:mm:ss" />
-									0 评论
-								</p>
+				<!--如果热点不空则显示热点 -->
+				<c:if test="${article.channelId==null}">
+
+					<!-- 广告 -->
+
+					<div id="carouselExampleCaptions" class="carousel slide"
+						data-ride="carousel">
+						<ol class="carousel-indicators">
+						  <c:forEach items="${slides}" var="slide" varStatus="i">
+							<li data-target="#carouselExampleCaptions" data-slide-to="${i.index }"
+								class="${i.index==0?"active":"" }"></li>
+							</c:forEach>
+							
+						</ol>
+						<div class="carousel-inner">
+						  <c:forEach items="${slides}" var="slide" varStatus="i">
+							<div class="carousel-item ${i.index==0?"active":"" }">
+								<img src="/pic/${slide.url }" 
+								class="d-block w-100 rounded" alt="..." width="650px" height="400">
+								<div class="carousel-caption d-none d-md-block">
+									<h5>${slide.title }</h5>
+								</div>
 							</div>
+							</c:forEach>
 						</div>
-						<hr>
-					</c:forEach>
-					
-					<jsp:include page="/WEB-INF/view/common/pages.jsp"></jsp:include>
-			
-			</c:if>
-			<!-- 如果热点为空则显示分类文章 -->
-			<c:if test="${article.channelId!=null}">
-				<!-- 栏目下分类菜单 -->
-				<div class="subchannel">
-					<ul class="sub-list" style="width: 660px;">
-						<li class="sub-item ${article.categoryId==null?"sub-selected":"" }"><a
-							href="/?channelId=${article.channelId}">全部</a></li>
-						<c:forEach items="${categorys}" var="category">
+						<a class="carousel-control-prev" href="#carouselExampleCaptions"
+							role="button" data-slide="prev"> <span
+							class="carousel-control-prev-icon" aria-hidden="true"></span> <span
+							class="sr-only">Previous</span>
+						</a> <a class="carousel-control-next" href="#carouselExampleCaptions"
+							role="button" data-slide="next"> <span
+							class="carousel-control-next-icon" aria-hidden="true"></span> <span
+							class="sr-only">Next</span>
+						</a>
+					</div>
 
-							<li class="sub-item ${article.categoryId==category.id?"sub-selected":"" }"><a
-								href="/?channelId=${article.channelId}&categoryId=${category.id}">${category.name }</a></li>
-						</c:forEach>
 
-					</ul>
-					<hr>
 
-				</div>
-				<!-- 分类文章 -->
-				<div>
+
+
+
+
 					<c:forEach items="${info.list}" var="article">
 						<div class="media">
 							<img src="/pic/${article.picture}"
@@ -111,10 +110,53 @@
 						</div>
 						<hr>
 					</c:forEach>
-					<jsp:include page="/WEB-INF/view/common/pages.jsp"></jsp:include>
-				</div>
 
-              </c:if>
+					<jsp:include page="/WEB-INF/view/common/pages.jsp"></jsp:include>
+
+				</c:if>
+				<!-- 如果热点为空则显示分类文章 -->
+				<c:if test="${article.channelId!=null}">
+
+					<!-- 栏目下分类菜单 -->
+					<div class="subchannel">
+						<ul class="sub-list" style="width: 660px;">
+							<li class="sub-item ${article.categoryId==null?"sub-selected":"" }"><a
+								href="/?channelId=${article.channelId}">全部</a></li>
+							<c:forEach items="${categorys}" var="category">
+
+								<li class="sub-item ${article.categoryId==category.id?"sub-selected":"" }"><a
+									href="/?channelId=${article.channelId}&categoryId=${category.id}">${category.name }</a></li>
+							</c:forEach>
+
+						</ul>
+						<hr>
+
+					</div>
+					<!-- 分类文章 -->
+					<div>
+						<c:forEach items="${info.list}" var="article">
+							<div class="media">
+								<img src="/pic/${article.picture}"
+									class="align-self-center mr-3 rounded" alt="..." width="156px"
+									height="101.8">
+								<div class="media-body">
+									<h5 class="mt-0">
+										<a href="/articleDetail?id=${article.id }" target="_blank">${article.title }</a>
+									</h5>
+									<p>${article.summary }</p>
+									<p>
+										<fmt:formatDate value="${article.created }"
+											pattern="yyyy-MM-dd HH:mm:ss" />
+										0 评论
+									</p>
+								</div>
+							</div>
+							<hr>
+						</c:forEach>
+						<jsp:include page="/WEB-INF/view/common/pages.jsp"></jsp:include>
+					</div>
+
+				</c:if>
 
 			</div>
 			<!-- 右侧区域 -->
@@ -129,7 +171,9 @@
 								<li class="media"><img src="/pic/${lastArticle.picture }"
 									class="mr-3" alt="..." width="60" height="60">
 									<div class="media-body">
-										<p style="font-size: 14px"><a href="/articleDetail?id=${lastArticle.id}" target="_blank">${lastArticle.title }</a></p>
+										<p style="font-size: 14px">
+											<a href="/articleDetail?id=${lastArticle.id}" target="_blank">${lastArticle.title }</a>
+										</p>
 									</div></li>
 
 							</ul>

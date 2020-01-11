@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>天天头条个人中心</title>
+<title>今日头条个人中心</title>
 <!-- 引入 css -->
 <link rel="stylesheet" type="text/css"
 	href="/resource/css/bootstrap.css">

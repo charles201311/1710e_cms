@@ -30,5 +30,34 @@
 		<property name="providerClass"
 			value="org.hibernate.validator.HibernateValidator"></property>
 	</bean>
+	
+	<!--配置自定义拦截器 -->
+	<mvc:interceptors>
+	  <!-- 管理员拦截器 -->
+	 <mvc:interceptor>
+	    <!-- 拦截规则 -->
+	   <mvc:mapping path="/admin/**"/>
+	    <!-- 不拦截规则 -->
+	   <mvc:exclude-mapping path="/resource/**"/>
+	   <!-- 拦截器处理类 -->
+	   <bean class="com.bobo.cms.util.AdminInterceptor"></bean>
+	 
+	 </mvc:interceptor>
+	 
+	 
+	   <!-- 个人中心拦截器 -->
+	 <mvc:interceptor>
+	    <!-- 拦截规则 -->
+	   <mvc:mapping path="/my/**"/>
+	    <!-- 不拦截规则 -->
+	   <mvc:exclude-mapping path="/resource/**"/>
+	   <!-- 拦截器处理类 -->
+	   <bean class="com.bobo.cms.util.MyInterceptor"></bean>
+	 
+	 </mvc:interceptor>
+	
+	
+	
+	</mvc:interceptors>
 
 </beans>

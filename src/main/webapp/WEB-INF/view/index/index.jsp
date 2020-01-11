@@ -7,7 +7,9 @@
 <meta charset="UTF-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>天天头条</title>
+<title>今日头条</title>
+<link rel="shortcut icon" type="image/x-icon"
+	href="/resource/images/aa.ico" />
 <!-- 引入 css -->
 <link rel="stylesheet" type="text/css"
 	href="/resource/css/bootstrap.css">
@@ -24,15 +26,29 @@
 			<div class="col-md-12"
 				style="background-color: #222222; height: 34px; padding-top: 5px; font-size: 14px">
 				<a href="#"><font color="white">下载APP</font></a>
-				
 				<div style="float: right">
-				<button type="button"  onclick="reg()" class="btn btn-link btn-sm" data-toggle="modal" data-target="#exampleModal">
-  					<font color="white">注册</font>
-				</button>
-				<button type="button"  onclick="login()" class="btn btn-link btn-sm" data-toggle="modal" data-target="#exampleModal">
-  					<font color="white">登录</font>
-				</button>
-				
+					<!-- 如果没有登录则显示登录注册按钮 -->
+					<c:if test="${null==sessionScope.user && null!=sessionScope.admin}">
+
+						<button type="button" onclick="reg()" class="btn btn-link btn-sm"
+							data-toggle="modal" data-target="#exampleModal">
+							<font color="white">注册</font>
+						</button>
+						<button type="button" onclick="login()"
+							class="btn btn-link btn-sm" data-toggle="modal"
+							data-target="#exampleModal">
+							<font color="white">登录</font>
+						</button>
+					</c:if>
+					<c:if test="${null!=sessionScope.user}">
+						<font color="white">${sessionScope.user.username }</font>
+						<button type="button" onclick="logout()"
+							class="btn btn-link btn-sm" data-toggle="modal"
+							data-target="#exampleModal">
+							<font color="white">注销</font>
+						</button>
+
+					</c:if>
 				</div>
 			</div>
 
@@ -199,23 +215,25 @@
 
 
 
-<!-- 注册的modal-->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel"><span id="myTitle" style="color: red"></span></h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body" id="myModal">
-        
-      </div>
-     
-    </div>
-  </div>
-</div>
+	<!-- 注册的modal-->
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">
+						<span id="myTitle"></span>
+					</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body" id="myModal"></div>
+
+			</div>
+		</div>
+	</div>
 
 
 
@@ -230,14 +248,24 @@
 			location.href = "/?page=" + page + "&channelId=" + channelId
 					+ "&categoryId=" + categoryId
 		}
-		
+
 		//注册
-		
-		function reg(){
+
+		function reg() {
 			$("#myTitle").text("用户注册");
 			$("#myModal").load("/passport/reg");
 		}
+
+		//登录
+		function login() {
+			$("#myTitle").text("用户登录");
+			$("#myModal").load("/passport/login");
+		}
 		
+     //注销
+     function logout(){
+    	 location.href="/passport/logout";
+     }
 	</script>
 </body>
 </html>

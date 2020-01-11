@@ -5,6 +5,16 @@ import java.util.List;
 import com.bobo.cms.domain.User;
 
 public interface UserMapper {
+	
+	/**
+	 * 
+	 * @Title: selectByName 
+	 * @Description: TODO
+	 * @param name
+	 * @return
+	 * @return: User
+	 */
+	User selectByName(String name);
 
 	/**
 	 * 

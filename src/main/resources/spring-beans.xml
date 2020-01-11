@@ -65,6 +65,7 @@
 			<tx:method name="get*" read-only="true" />
 			<tx:method name="load*" read-only="true" />
 			<tx:method name="list*" read-only="true" />
+			<tx:method name="login*" read-only="true" />
 			<!-- 其他的方法为默认事务 -->
 			<tx:method name="*" propagation="REQUIRED" />
 		</tx:attributes>

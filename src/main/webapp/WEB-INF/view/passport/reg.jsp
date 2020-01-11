@@ -18,7 +18,9 @@
 </head>
 <body>
 	<div class="container">
+	   <span style="color: red" id="msg"></span>
 		<form id="form1">
+		    
 			<div class="form-group">
 				<label for="username">用户名</label> <input id="username" type="text"
 					name="username" class="form-control">
@@ -37,7 +39,7 @@
 
           <div class="form-group form-inline">
 			<div class="form-check"> 
-				 <input  type="radio"	name="gender" class="form-check-input" value="1">男 
+				 <input  type="radio"	name="gender" class="form-check-input" value="1" checked="checked">男 
 			</div>
 			<div class="form-check"> 
 				 <input	 type="radio" name="gender" class="form-check-input"value="0" >女
@@ -62,10 +64,18 @@
 		$("#form1").validate({
 			//定义规则
 			rules:{
-			   	
 				username:{
 					required:true,//用户名必须输入
 					rangelength:[2,5],//用户名的长度在2-5之间
+					remote:{
+						type:"post",
+						data:{   //注意：和普通的传值不一样
+							username:function(){
+								return $("#username").val();
+							}							
+							},
+						url:"/passport/checkname",
+					}
 				},
 				password:{
 					required:true,//密码必须输入
@@ -82,6 +92,7 @@
 				username:{
 					required:"用户名必须输入",
 					rangelength:"用户名的长度在2-5之间",
+					remote:"用户已经被注册",
 				},
 				password:{
 					required:"密码必须输入",
@@ -93,11 +104,15 @@
 				}
 			},
 			submitHandler:function(){//提交
+				
+				alert($("#username").val())
 			   
-				 $.post("/passport/reg",$("#form1").serialize(),function(flag){
-					 if(flag){
-							$("#myTitle").text("注册成功，请登录");
+				 $.post("/passport/reg",$("#form1").serialize(),function(result){
+					 if(result.code=="200"){//执行成功
+							$("#myTitle").html("<font color='red'>注册成功，请登录<font>");
 							$("#myModal").load("/passport/login");//执行成功跳转到登录页面
+					 }else{
+						$("#msg").text(result.msg);
 					 }
 				 })
 			}

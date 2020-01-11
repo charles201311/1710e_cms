@@ -15,7 +15,8 @@
 </head>
 <body>
 	<div class="container">
-		<form id="form1">
+	   <span style="color: red" id="msg"></span>
+		<form id="form1" action="/passport/login" method="post">
 			<div class="form-group">
 				<label for="username">用户名</label> <input id="username" type="text"
 					name="username" class="form-control">
@@ -66,6 +67,13 @@
 				
 			},
 			submitHandler:function(){
+			   $.post("/passport/login",$("#form1").serialize(),function(result){
+				  if(result.code=="200"){
+					 location.href="/"  ;//登录成功，刷新页面
+				  }else{
+					$("#msg").text(result.msg);  
+				  }
+			   })
 			   	
 			}
 			

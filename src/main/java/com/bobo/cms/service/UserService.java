@@ -17,4 +17,14 @@ public interface UserService {
 	 * @return: int
 	 */
 	boolean update(User user);
+	
+	/**
+	 * 
+	 * @Title: insert 
+	 * @Description: TODO
+	 * @param user
+	 * @return
+	 * @return: 
+	 */
+	boolean insert(User user);
 }

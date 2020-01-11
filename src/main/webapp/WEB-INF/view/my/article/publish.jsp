@@ -121,7 +121,7 @@ String htmlData = request.getParameter("content1") != null ? request.getParamete
 			<select class="form-control form-control-sm"  name="channelId"  id="channel">
 			</select>
 			 <label>分类</label>
-			<select class="form-control form-control-sm"  name="categroyId"  id="category">
+			<select class="form-control form-control-sm"  name="categoryId"  id="category">
 			</select>
 		</div>
 

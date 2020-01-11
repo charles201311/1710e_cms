@@ -26,10 +26,10 @@
 				</div>
 		  
 		</div>
-	<div class="container-fluid" style="padding-top: 5px">
+	<div class="container-fluid" style="padding-top: 5px;">
 		
 		
-		<div class="row" style="padding-top: 10px">
+		<div class="row" style="padding-top: 10px ;height: 500px" >
 			<div class="col-md-2 rounded" style="background-color: #ccc;text-align: center;padding-top: 5px">
 				
 				<nav class="nav flex-column">

@@ -25,5 +25,15 @@ public interface UserMapper {
 	 */
 	int update(User user);
 	
+	/**
+	 * 
+	 * @Title: insert 
+	 * @Description: TODO
+	 * @param user
+	 * @return
+	 * @return: int
+	 */
+	int insert(User user);
+	
 	
 }

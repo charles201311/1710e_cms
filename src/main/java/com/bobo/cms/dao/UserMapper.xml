@@ -52,4 +52,10 @@
 	select * from cms_user where id=#{id}
 	
 	</select>
+	
+	<insert id="insert">
+	
+	insert into cms_user(username,password,gender) values(#{username},#{password},#{gender})
+	
+	</insert>
 </mapper>

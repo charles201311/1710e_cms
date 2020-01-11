@@ -31,4 +31,10 @@ public class UserServiceImpl implements UserService {
 		return userMapper.update(user)>0;
 	}
 
+	@Override
+	public boolean insert(User user) {
+		// TODO Auto-generated method stub
+		return userMapper.insert(user)>0;
+	}
+
 }

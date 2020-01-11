@@ -122,6 +122,7 @@ public class MyController {
 		article.setCreated(new Date());//默认发布时间
 		article.setUpdated(new Date());//默认发布时间
 		article.setContentType(0);//发布的文章类型
+		article.setHot(0);//非热点
 		
 		return articleService.insert(article);
 		

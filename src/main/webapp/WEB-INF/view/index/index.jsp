@@ -24,6 +24,16 @@
 			<div class="col-md-12"
 				style="background-color: #222222; height: 34px; padding-top: 5px; font-size: 14px">
 				<a href="#"><font color="white">下载APP</font></a>
+				
+				<div style="float: right">
+				<button type="button"  onclick="reg()" class="btn btn-link btn-sm" data-toggle="modal" data-target="#exampleModal">
+  					<font color="white">注册</font>
+				</button>
+				<button type="button"  onclick="login()" class="btn btn-link btn-sm" data-toggle="modal" data-target="#exampleModal">
+  					<font color="white">登录</font>
+				</button>
+				
+				</div>
 			</div>
 
 		</div>
@@ -57,21 +67,21 @@
 					<div id="carouselExampleCaptions" class="carousel slide"
 						data-ride="carousel">
 						<ol class="carousel-indicators">
-						  <c:forEach items="${slides}" var="slide" varStatus="i">
-							<li data-target="#carouselExampleCaptions" data-slide-to="${i.index }"
-								class="${i.index==0?"active":"" }"></li>
+							<c:forEach items="${slides}" var="slide" varStatus="i">
+								<li data-target="#carouselExampleCaptions"
+									data-slide-to="${i.index }" class="${i.index==0?"active":"" }"></li>
 							</c:forEach>
-							
+
 						</ol>
 						<div class="carousel-inner">
-						  <c:forEach items="${slides}" var="slide" varStatus="i">
-							<div class="carousel-item ${i.index==0?"active":"" }">
-								<img src="/pic/${slide.url }" 
-								class="d-block w-100 rounded" alt="..." width="650px" height="400">
-								<div class="carousel-caption d-none d-md-block">
-									<h5>${slide.title }</h5>
+							<c:forEach items="${slides}" var="slide" varStatus="i">
+								<div class="carousel-item ${i.index==0?"active":"" }">
+									<img src="/pic/${slide.url }" class="d-block w-100 rounded"
+										alt="..." width="650px" height="400">
+									<div class="carousel-caption d-none d-md-block">
+										<h5>${slide.title }</h5>
+									</div>
 								</div>
-							</div>
 							</c:forEach>
 						</div>
 						<a class="carousel-control-prev" href="#carouselExampleCaptions"
@@ -87,7 +97,7 @@
 
 
 
-
+					<hr>
 
 
 
@@ -175,24 +185,43 @@
 											<a href="/articleDetail?id=${lastArticle.id}" target="_blank">${lastArticle.title }</a>
 										</p>
 									</div></li>
-
 							</ul>
 							<hr>
 						</c:forEach>
 					</div>
-
-
 				</div>
-
-
-
 			</div>
-
-
 		</div>
+	</div>
+
+
+
+
+
+
+<!-- 注册的modal-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><span id="myTitle" style="color: red"></span></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="myModal">
+        
+      </div>
+     
+    </div>
+  </div>
+</div>
+
+
 
 
 	</div>
+
 
 	<script type="text/javascript">
 		function goPage(page) {
@@ -201,6 +230,14 @@
 			location.href = "/?page=" + page + "&channelId=" + channelId
 					+ "&categoryId=" + categoryId
 		}
+		
+		//注册
+		
+		function reg(){
+			$("#myTitle").text("用户注册");
+			$("#myModal").load("/passport/reg");
+		}
+		
 	</script>
 </body>
 </html>

@@ -59,7 +59,8 @@
 	
 	<insert id="insert">
 	
-	insert into cms_user(username,password,gender) values(#{username},#{password},#{gender})
+	insert into cms_user(username,password,gender,created,updated,nickname)
+	 values(#{username},#{password},#{gender},#{created},#{updated},#{nickname})
 	
 	</insert>
 </mapper>

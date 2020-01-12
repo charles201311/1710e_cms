@@ -73,24 +73,32 @@ public class PassportController {
 
 	}
 
+	// 管理员去登录
+	@GetMapping("admin/login")
+	public String adminLogin() {
+
+		return "passport/adminlogin";
+
+	}
+
 	// 执行登录
 	@ResponseBody
 	@PostMapping("login")
-	public Result<User> login(User user,HttpSession session) {
+	public Result<User> login(User user, HttpSession session) {
 		Result<User> result = new Result<User>();
 		try {
 			User u = userService.login(user);
-			
+
 			result.setCode(200);
 			result.setMsg("登录成功");
-			//存入session
-			
-			if(u.getRole().equals("1")) {//1：管理员 0：普通用户
-			    session.setAttribute("admin", u);
-			}else {
-				 session.setAttribute("user", u);
+			// 存入session
+			// 根据等录的用户的角色进入 存储不同的session key
+			if (u.getRole().equals("1")) {// 1：管理员 0：普通用户
+				session.setAttribute("admin", u);
+			} else {
+				session.setAttribute("user", u);
 			}
-			
+
 		} catch (CMSException e) {
 			e.printStackTrace();
 			result.setCode(300);
@@ -101,20 +109,17 @@ public class PassportController {
 			result.setCode(500);
 			result.setMsg("未知错误，请联系管理员");// 封装错误消息
 		}
-		
-		
+
 		return result;
-		
-		
 
 	}
-	
-	//注销系统
+
+	// 注销系统
 	@GetMapping("logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "redirect:/";
-		
+
 	}
 
 }

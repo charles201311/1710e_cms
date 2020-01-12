@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.bobo.cms.domain.Article;
 import com.bobo.cms.domain.Category;
 import com.bobo.cms.domain.Channel;
+import com.bobo.cms.domain.User;
 import com.bobo.cms.service.ArticleService;
 import com.bobo.cms.service.ChannelService;
 import com.github.pagehelper.PageInfo;
@@ -59,9 +61,11 @@ public class MyController {
 	 * @return: String
 	 */
 	@RequestMapping("/article/articles")
-	public String articles(Model model,Article article,@RequestParam(defaultValue = "1")Integer page, @RequestParam(defaultValue = "3") Integer pageSize) {
+	public String articles(HttpSession session ,Model model,Article article,@RequestParam(defaultValue = "1")Integer page, @RequestParam(defaultValue = "3") Integer pageSize) {
 	    
-		//article.setUserId(userId);
+		User user = (User) session.getAttribute("user");
+		
+		article.setUserId(user.getId());
 		//暂时先把所有文章查询出来。
 		PageInfo<Article> info = articleService.selects(article, page, pageSize);
 		model.addAttribute("info", info);
@@ -92,7 +96,7 @@ public class MyController {
 	 */
 	@ResponseBody
 	@PostMapping("article/publish")
-	public boolean  publish(@RequestParam("file2") MultipartFile file, Article article) {
+	public boolean  publish(@RequestParam("file2") MultipartFile file, Article article,HttpSession session) {
 		
 		if(!file.isEmpty()) {
 		   String upload ="d:/pic/";	//文件路径
@@ -113,9 +117,13 @@ public class MyController {
 		
 		
 		//封装文件的基本属性
+		User user = (User) session.getAttribute("user");
+	    //从session获取当前登录的人信息
+		if(null==user) {
+			return false;//如果session过期则回到首页重新登录
+		}
+		article.setUserId(user.getId());//
 		
-	
-		article.setUserId(177);
 		article.setStatus(0);//默认待审核
 		article.setHits(0);;//默认点击量为 0
 		article.setDeleted(0);//默认未删除

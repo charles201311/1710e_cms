@@ -37,8 +37,8 @@
 
 			<div class="col-md-12"
 				style="height: 60px; background-color: #563D7C">
-				<img alt="" src="/resource/images/logo.png" width="55px"
-					height="55px" class="rounded-circle"> <font
+				<a href="/"><img alt="" src="/resource/images/logo.png" width="55px"
+					height="55px" class="rounded-circle"> </a><font
 					style="color: white">个人中心后台</font>
 			</div>
 

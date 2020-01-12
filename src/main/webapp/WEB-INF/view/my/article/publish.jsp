@@ -91,7 +91,7 @@ String htmlData = request.getParameter("content1") != null ? request.getParamete
 				 location.href="/my"
 			 }
 			 else{
-				 alert("发布失败")
+				 alert("发布失败,请重新登陆后再试")
 			 }
 		 }
 		 

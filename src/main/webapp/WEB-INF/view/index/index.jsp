@@ -14,10 +14,8 @@
 <link rel="stylesheet" type="text/css"
 	href="/resource/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="/resource/css/index.css">
-<!-- 引入js -->
-<script type="text/javascript" src="/resource/js/jquery-3.2.1.js"></script>
-<!-- 引入js -->
-<script type="text/javascript" src="/resource/js/bootstrap.min.js"></script>
+
+
 </head>
 <body>
 	<div class="container-fluid">
@@ -28,7 +26,7 @@
 				<a href="#"><font color="white">下载APP</font></a>
 				<div style="float: right">
 					<!-- 如果没有登录则显示登录注册按钮 -->
-					<c:if test="${null==sessionScope.user && null!=sessionScope.admin}">
+					<c:if test="${null==sessionScope.user}">
 
 						<button type="button" onclick="reg()" class="btn btn-link btn-sm"
 							data-toggle="modal" data-target="#exampleModal">
@@ -41,14 +39,28 @@
 						</button>
 					</c:if>
 					<c:if test="${null!=sessionScope.user}">
-						<font color="white">${sessionScope.user.username }</font>
+						<%-- 	<font color="white">${sessionScope.user.username }</font>
 						<button type="button" onclick="logout()"
 							class="btn btn-link btn-sm" data-toggle="modal"
 							data-target="#exampleModal">
 							<font color="white">注销</font>
-						</button>
+						</button> --%>
+						<div class="btn-group dropleft">
+							<button type="button"
+								class="btn btn-sm btn-secondary dropdown-toggle" style="background: #222222;border: 0px;padding-bottom: 0px"
+								data-toggle="dropdown" aria-haspopup="true"
+								aria-expanded="false">${sessionScope.user.username }</button>
+							<div class="dropdown-menu">
+									<a class="dropdown-item" href="/my">个人中心</a></a>
+									 <a	class="dropdown-item" href="/passport/logout">注销</a> 
+							</div>
+						</div>
+
 
 					</c:if>
+
+
+
 				</div>
 			</div>
 
@@ -63,7 +75,7 @@
 					</a></li>
 
 					<li><a class="channel-item ${article.channelId==null?"
-						active":"" }" href="/?hot=1">热点文章</a></li>
+						active":"" }" href="/?hot=1">热点</a></li>
 					<c:forEach items="${channels}" var="channel">
 						<li><a class="channel-item  ${article.channelId==channel.id?"
 							active":"" }" href="/?channelId=${channel.id }">${channel.name }</a></li>
@@ -187,8 +199,17 @@
 			</div>
 			<!-- 右侧区域 -->
 			<div class="col-md-3">
+				<!--  搜索框 -->
+				<div class="card"
+					style="width: 18rem; margin-bottom: 5px; border: 0px">
+					<div class="form-inline">
+						<input type="text" placeholder="请输入要搜索的内容" class="form-control"
+							style="width: 14rem; margin-right: 5px">
+						<button class="btn btn-info" type="button">搜索</button>
+					</div>
 
-
+				</div>
+				<!-- 最新文章 -->
 				<div class="card" style="width: 18rem;">
 					<div class="card-header" style="text-align: center;">最新文章</div>
 					<div class="card-body">
@@ -239,7 +260,11 @@
 
 
 	</div>
-
+	<!-- 引入js -->
+	<script type="text/javascript" src="/resource/js/jquery-3.2.1.js"></script>
+	<!-- 引入js -->
+	<script type="text/javascript" src="/resource/js/popper.min.js"></script>
+	<script type="text/javascript" src="/resource/js/bootstrap.min.js"></script>
 
 	<script type="text/javascript">
 		function goPage(page) {
@@ -261,11 +286,11 @@
 			$("#myTitle").text("用户登录");
 			$("#myModal").load("/passport/login");
 		}
-		
-     //注销
-     function logout(){
-    	 location.href="/passport/logout";
-     }
+
+		//注销
+		function logout() {
+			location.href = "/passport/logout";
+		}
 	</script>
 </body>
 </html>

@@ -53,6 +53,12 @@
    
    </if>
    
+    <if test="userId!=null">
+   
+     and user_Id = #{userId}
+   
+   </if>
+   
   
   </where>
   

@@ -26,7 +26,7 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
 			return true;//管理员登录不拦截
 		
 		
-		response.sendRedirect("/"); 		
+		response.sendRedirect("/passport/admin/login"); 		
 		
 		return false;
 	}

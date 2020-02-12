@@ -1,5 +1,6 @@
 package com.bobo.cms.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -17,6 +18,7 @@ import com.bobo.cms.service.ArticleService;
 import com.bobo.cms.service.ChannelService;
 import com.bobo.cms.service.SlideService;
 import com.github.pagehelper.PageInfo;
+import com.yangchunbo.util.DateUtil;
 
 @Controller
 public class IndexController {
@@ -65,6 +67,17 @@ public class IndexController {
 		lastArticle.setDeleted(0);//未删除
 		PageInfo<Article> lastInfo = articleService.selects(null, 1, 5);
 		model.addAttribute("lastInfo", lastInfo);
+		
+		
+		//查询24小时热文
+		
+		Article hot24Article = new Article();
+		hot24Article.setStatus(1);//审核过的
+		hot24Article.setHot(1);//热门文章
+		
+		hot24Article.setCreated(DateUtil.subDate(new Date()));//调用工具类，系统时间向前推荐24个小时
+		PageInfo<Article> hot24ArticleInfo = articleService.selects(hot24Article, 1, 4);//24小时热文，默认显示4条
+		model.addAttribute("hot24ArticleInfo", hot24ArticleInfo);
 		return "index/index";
 		
 	}

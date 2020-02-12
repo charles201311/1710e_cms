@@ -59,6 +59,14 @@
    
    </if>
    
+   <!-- 是否热点文章 -->
+   <if test="hot!=null">
+     and hot = #{hot}
+   </if>
+   <!-- 查询某个时间段内的文章 -->
+   <if test="created!=null and created!=''">
+    and created between #{created ,jdbcType=TIMESTAMP} and now()
+   </if>
   
   </where>
   

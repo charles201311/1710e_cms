@@ -38,7 +38,7 @@ public class AdminController {
     */
 	@RequestMapping(value = {"","/","index"})
 	public String index() {
-		
+		org.apache.commons.lang3.StringUtils.isBlank("aa");
 		
 		return "admin/index";
 	}

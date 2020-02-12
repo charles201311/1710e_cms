@@ -105,7 +105,6 @@
 			},
 			submitHandler:function(){//提交
 				
-				alert($("#username").val())
 			   
 				 $.post("/passport/reg",$("#form1").serialize(),function(result){
 					 if(result.code=="200"){//执行成功

@@ -209,6 +209,23 @@
 					</div>
 
 				</div>
+				<!-- 24小时热文 -->
+				<div class="card" style="width: 18rem;">
+					<div class="card-header" style="text-align: center;">24小时热文</div>
+					<div class="card-body">
+						<c:forEach items="${hot24ArticleInfo.list}" var="hot24Article">
+							<ul class="list-unstyled">
+								<li class="media"><img src="/pic/${hot24Article.picture }"
+									class="mr-3" alt="..." width="60" height="60">
+									<div class="media-body">
+										<p style="font-size: 14px">
+											<a href="/articleDetail?id=${hot24Article.id}" target="_blank">${hot24Article.title }</a>
+										</p>
+									</div></li>
+							</ul>
+							<hr>
+						</c:forEach>
+					</div>
 				<!-- 最新文章 -->
 				<div class="card" style="width: 18rem;">
 					<div class="card-header" style="text-align: center;">最新文章</div>

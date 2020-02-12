@@ -14,7 +14,7 @@
 	href="/resource/css/jquery/screen.css">
 </head>
 <body>
-	<div class="container-fluid">
+	<div class="container-fluid"  >
 		<div class="row rounded"
 			style="background-color: #009FD9; height: 55px">
 			<div class="col-md-12">
@@ -27,21 +27,26 @@
 			</div>
 
 		</div>
-		<div class="row" style="width: 300px ;text-align: center;">
-		<div class="col-md-12" align="center";style="left: 150px">
+		<hr>
+		<h1 align="center">欢迎回来</h1>
+		<hr>
+		<div class="row" >
+		
+		<div class="col-md-12" align="center" style="width: 300px">
+		  
 			<span style="color: red" id="msg"></span>
-			<form id="form1" action="/passport/login" method="post">
+			<form id="form1">
 				<div class="form-group">
-					<label for="username">用户名</label> <input id="username" type="text"
+					 <input id="username" placeholder="用户名"  style="width: 300px" type="text"
 						name="username" class="form-control">
 				</div>
 
 				<div class="form-group">
-					<label for="password">密码</label> <input id="password"
-						type="password" name="password" class="form-control">
+					 <input id="password"
+						type="password" placeholder="密码" style="width: 300px" name="password" class="form-control">
 				</div>
 
-				<div class="form-group " style="text-align: center">
+				<div class="form-group " >
 					<button type="submit" class="btn btn-info">登录</button>
 					<button type="reset" class="btn btn-info">重置</button>
 

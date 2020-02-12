@@ -64,7 +64,7 @@
      and hot = #{hot}
    </if>
    <!-- 查询某个时间段内的文章 -->
-   <if test="created!=null and created!=''">
+   <if test="created!=null">
     and created between #{created ,jdbcType=TIMESTAMP} and now()
    </if>
   

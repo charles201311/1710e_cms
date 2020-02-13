@@ -1,21 +1,28 @@
 package com.bobo.cms.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bobo.cms.domain.Article;
 import com.bobo.cms.domain.Category;
 import com.bobo.cms.domain.Channel;
+import com.bobo.cms.domain.Compent;
 import com.bobo.cms.domain.Slide;
+import com.bobo.cms.domain.User;
 import com.bobo.cms.service.ArticleService;
 import com.bobo.cms.service.ChannelService;
+import com.bobo.cms.service.CompentService;
 import com.bobo.cms.service.SlideService;
 import com.github.pagehelper.PageInfo;
 import com.yangchunbo.util.DateUtil;
@@ -31,6 +38,8 @@ public class IndexController {
 	
 	@Resource
 	private SlideService slideService;
+	@Resource
+	private CompentService compentService;
 	
 	@RequestMapping(value = {"","/","index"})
 	public String index(Model model,Article article,@RequestParam(defaultValue = "1")Integer page,
@@ -82,13 +91,58 @@ public class IndexController {
 		
 	}
 	
-	//文章详情
+	/**
+	 * 
+	 * @Title: articleDetail 
+	 * @Description:文章详情和文章对应的评论
+	 * @param model
+	 * @param id  文章ID 
+	 * @param page
+	 * @param pageSize
+	 * @return
+	 * @return: String
+	 */
 	@RequestMapping("articleDetail")
-	public String articleDetail(Model model ,Integer id) {
-		
+	public String articleDetail(Model model ,Integer id,@RequestParam(defaultValue = "1")Integer page,@RequestParam(defaultValue = "5")Integer pageSize) {
+		//文章内容
 		Article article = articleService.select(id);
 		model.addAttribute("article", article);
+		
+		//文章对应的评论
+		PageInfo<Compent> compentInfo = compentService.selects(id, page, pageSize);
+		model.addAttribute("info", compentInfo);
+		
 		return "index/article";
+	}
+	/**
+	 * 
+	 * @Title: addContent 
+	 * @Description: 增加评论
+	 * @param compent
+	 * @return
+	 * @return: boolean
+	 */
+	@ResponseBody
+	@RequestMapping("addContent")
+	public boolean addContent(Compent compent,HttpServletRequest request) {
+	
+		
+		HttpSession session = request.getSession();//获取session
+		User user = (User) session.getAttribute("user");//从session 获取登录人的信息
+		
+		if(null==user) {//如果sesssion没有登录信息，则不能评论
+			return false;
+		}
+		//评论人
+		compent.setUser(user);
+		//评论时间
+		SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		
+		compent.setCreated(fmt.format(new Date()));
+		
+		
+		return compentService.insert(compent) >0;
+		
 	}
 
 }

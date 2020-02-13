@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bobo.cms.dao.CompentMapper">
+
+	<insert id="insert">
+
+		insert into cms_compent(user_id,article_id,content,created)
+		values(#{user.id},#{article.id},#{content},#{created})
+
+	</insert>
+
+	<resultMap type="Compent" id="resultCompent">
+		<id column="id" property="id" />
+		<result column="content" property="content" />
+		<result column="created" property="created" />
+		<!--封装user对象 -->
+		<association property="user" javaType="User">
+			<id column="user_id" property="id" />
+			<result column="username" property="username" />
+		</association>
+
+	</resultMap>
+
+	<select id="selects" resultMap="resultCompent">
+
+		select c.*,u.username from cms_compent c LEFT JOIN cms_user u on c.user_id
+		=u.id
+		where article_id =#{articleId}
+
+		order by created desc
+
+	</select>
+
+</mapper>

@@ -28,7 +28,64 @@
 	<div>${article.content }</div>
 
 
-	</div>
+ <hr style="height:3px;border:none;border-top:3px double red;" />
+ <!-- 如果用户没有登录则不显示评论框 -->
+ <c:if test="${null!=sessionScope.user }">
+ <div>
+  评论： <textarea rows="5" cols="153" name="content"></textarea>
+
+  <button class="btn btn-info" type="button" onclick="addContent()">提交评论</button>
+   <button class="btn btn-warning" type="reset">清空内容</button>
+ 
+ </div>
+ </c:if>
+ <c:if test="${null == sessionScope.user }">
+      <h3 style="color: red">  请登录后进行评论</h3>
+ </c:if>
+ 
+
+	<!-- 显示评论内容
+	 -->
+	 <div>
+	   <c:forEach items="${info.list}" var="compent">
+	     <dl>
+	       <dt>${compent.user.username } &nbsp; ${compent.created }</dt>
+	       <dd>${compent.content }</dd>
+	     </dl>
+	   </c:forEach>
+	   
+	   <!-- 引入分页的信息 -->
+	   <jsp:include
+					page="/WEB-INF/view/common/pages.jsp"></jsp:include>
+	   
+	 
+	 </div>
+	 
 </body>
+
+ <script type="text/javascript">
+//翻页
+     var id ='${article.id}';//文章ID
+	function goPage(page) {
+	
+	   location.href="/articleDetail?id="+id+"&page=" + page
+	}
+ 
+    //增加评论
+   function addContent(){
+    	
+    	//参数 : （ content :评论内容），article.id ： 文章的ID
+	 $.post("/addContent",{content:$("[name='content']").val(),'article.id':id},function(flag){
+		 if(flag){
+			 alert("评论成功！");
+			 //刷新本页面
+			  location.href="/articleDetail?id="+id;
+		 }else{
+			 alert("评论失败！请登录后再试");
+		 }
+	 })  
+   }
+ 
+ </script>
 
 </html>

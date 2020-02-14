@@ -18,74 +18,110 @@
 
 </head>
 
-<body class="container">
-	<div>
-		<h2>${article.title }</h2>
-		<p>${article.user.username} <fmt:formatDate value="${article.created }" pattern="yyyy-MM-dd HH:mm:ss"/> </p>
-	</div>
+<body>
+	<div class="container">
+		<!-- 文章标题，占12列 -->
+		<div class="row">
+			<div class="col-md-12">
+				<h2>${article.title }</h2>
+				<p>${article.user.username}
+					<fmt:formatDate value="${article.created }"
+						pattern="yyyy-MM-dd HH:mm:ss" />
+				</p>
+			</div>
+		</div>
 
-	<hr>
-	<div>${article.content }</div>
+		<hr>
+
+		<div class="row">
+			<!-- 左侧占9列 -->
+			<div class="col-md-9">
+
+				<div>${article.content }</div>
+
+				<hr style="height: 3px; border: none; border-top: 3px double red;" />
+				<!-- 如果用户没有登录则不显示评论框 -->
+				<c:if test="${null!=sessionScope.user }">
+					<div>
+						评论：
+						<textarea rows="5" cols="153" name="content"></textarea>
+
+						<button class="btn btn-info" type="button" onclick="addContent()">提交评论</button>
+						<button class="btn btn-warning" type="reset">清空内容</button>
+
+					</div>
+				</c:if>
+				<c:if test="${null == sessionScope.user }">
+					<h3 style="color: red">请登录后进行评论</h3>
+				</c:if>
 
 
- <hr style="height:3px;border:none;border-top:3px double red;" />
- <!-- 如果用户没有登录则不显示评论框 -->
- <c:if test="${null!=sessionScope.user }">
- <div>
-  评论： <textarea rows="5" cols="153" name="content"></textarea>
-
-  <button class="btn btn-info" type="button" onclick="addContent()">提交评论</button>
-   <button class="btn btn-warning" type="reset">清空内容</button>
- 
- </div>
- </c:if>
- <c:if test="${null == sessionScope.user }">
-      <h3 style="color: red">  请登录后进行评论</h3>
- </c:if>
- 
-
-	<!-- 显示评论内容
+				<!-- 显示评论内容
 	 -->
-	 <div>
-	   <c:forEach items="${info.list}" var="compent">
-	     <dl>
-	       <dt>${compent.user.username } &nbsp; ${compent.created }</dt>
-	       <dd>${compent.content }</dd>
-	     </dl>
-	   </c:forEach>
-	   
-	   <!-- 引入分页的信息 -->
-	   <jsp:include
-					page="/WEB-INF/view/common/pages.jsp"></jsp:include>
-	   
-	 
-	 </div>
-	 
+				<div>
+					<c:forEach items="${info.list}" var="compent">
+						<dl>
+							<dt>${compent.user.username }&nbsp;${compent.created }</dt>
+							<dd>${compent.content }</dd>
+						</dl>
+					</c:forEach>
+
+					<!-- 引入分页的信息 -->
+					<jsp:include page="/WEB-INF/view/common/pages.jsp"></jsp:include>
+				</div>
+			</div>
+			<div class="col-md-3">
+			
+			<!-- 热门推荐 -->
+				<div class="card" style="width: 18rem;">
+					<div class="card-header" style="text-align: center;">热门推荐</div>
+					<div class="card-body">
+						<c:forEach items="${hotArticles.list}" var="hotArticle">
+							<ul class="list-unstyled">
+								<li class="media"><img src="/pic/${hotArticle.picture }"
+									class="mr-3" alt="..." width="60" height="60">
+									<div class="media-body">
+										<p style="font-size: 14px">
+											<a href="/articleDetail?id=${hotArticle.id}" target="_blank">${hotArticle.title }</a>
+										</p>
+									</div></li>
+							</ul>
+							<hr>
+						</c:forEach>
+					</div>
+			
+			
+			
+			</div>
+		</div>
+	</div>
 </body>
 
- <script type="text/javascript">
-//翻页
-     var id ='${article.id}';//文章ID
+<script type="text/javascript">
+	//翻页
+	var id = '${article.id}';//文章ID
 	function goPage(page) {
-	
-	   location.href="/articleDetail?id="+id+"&page=" + page
+
+		location.href = "/articleDetail?id=" + id + "&page=" + page
 	}
- 
-    //增加评论
-   function addContent(){
-    	
-    	//参数 : （ content :评论内容），article.id ： 文章的ID
-	 $.post("/addContent",{content:$("[name='content']").val(),'article.id':id},function(flag){
-		 if(flag){
-			 alert("评论成功！");
-			 //刷新本页面
-			  location.href="/articleDetail?id="+id;
-		 }else{
-			 alert("评论失败！请登录后再试");
-		 }
-	 })  
-   }
- 
- </script>
+
+	//增加评论
+	function addContent() {
+
+		//参数 : （ content :评论内容），article.id ： 文章的ID
+		$.post("/addContent", {
+			content : $("[name='content']").val(),
+			'article.id' : id
+		}, function(flag) {
+			if (flag) {
+				alert("评论成功！");
+				//刷新本页面
+				location.href = "/articleDetail?id=" + id;
+			} else {
+				alert("评论失败！请登录后再试");
+			}
+		})
+	}
+</script>
 
 </html>

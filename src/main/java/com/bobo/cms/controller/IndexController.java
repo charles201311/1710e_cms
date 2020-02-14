@@ -112,6 +112,13 @@ public class IndexController {
 		PageInfo<Compent> compentInfo = compentService.selects(id, page, pageSize);
 		model.addAttribute("info", compentInfo);
 		
+		//热门文章  （在文章详情右侧显示）
+		Article hotArticle = new Article();
+		hotArticle.setHot(1);//热门文章
+		hotArticle.setStatus(1);//审核过的文章，才能显示
+		PageInfo<Article> hotArticles = articleService.selects(hotArticle, 1, 5);
+		model.addAttribute("hotArticles", hotArticles);
+		
 		return "index/article";
 	}
 	/**

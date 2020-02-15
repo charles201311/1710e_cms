@@ -28,6 +28,14 @@
 					<fmt:formatDate value="${article.created }"
 						pattern="yyyy-MM-dd HH:mm:ss" />
 				</p>
+				<c:if test="${null!=collect}">
+				   <a href="javascript:collect(1)"><span style="color: red">★ (已收藏)</span></a>
+				
+				</c:if>
+				<c:if test="${null==collect}">
+				 <a href="javascript:collect(0)">☆ (未收藏)</a>
+				
+				</c:if>
 			</div>
 		</div>
 
@@ -98,6 +106,37 @@
 </body>
 
 <script type="text/javascript">
+//收藏或取消收藏
+function collect(flag){
+	//获取当前文章的url
+	var url =window.location.href;
+	var text ='${article.title}';//文件的标题
+
+	if(flag==0){//收藏
+		$.post("/collect",{url:url,text:text},function(result){
+		 	if(result){
+		 		alert("收藏成功");
+		 		location.reload();//刷新当前页面
+		 		
+		 	}else{
+		 		alert("收藏失败")
+		 	}
+		})
+	}else{//取消收藏
+		var id='${collect.id}';
+        $.post("/unCollect",{id:id},function(result){
+        	if(result){
+		 		alert("取消收藏成功")
+		 			location.reload();	//刷新当前页面
+		 	}else{
+		 		alert("取消收藏失败")
+		 	}
+		})	
+	}
+	
+}
+
+
 	//翻页
 	var id = '${article.id}';//文章ID
 	function goPage(page) {

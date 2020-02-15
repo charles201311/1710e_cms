@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bobo.cms.dao.CollectMapper">
+	<select id="selects" resultType="Collect">
+		select * from cms_collect where user_id = #{userId}
+		order by created desc
+	</select>
+
+	<insert id="insert">
+		insert into cms_collect (text,url,created,user_id)
+		values(#{text},#{url},#{created},#{user.id})
+	</insert>
+	<delete id="delete">
+		delete from cms_collect where id =#{id}
+	</delete>
+	
+	<select id="selectByTitleAndUserId" resultType="Collect">
+		select * from cms_collect where user_id = #{userId} and text =#{title}
+	
+	</select>
+</mapper>

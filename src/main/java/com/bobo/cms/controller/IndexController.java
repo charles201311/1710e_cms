@@ -17,11 +17,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.bobo.cms.domain.Article;
 import com.bobo.cms.domain.Category;
 import com.bobo.cms.domain.Channel;
+import com.bobo.cms.domain.Collect;
 import com.bobo.cms.domain.Compent;
 import com.bobo.cms.domain.Slide;
 import com.bobo.cms.domain.User;
 import com.bobo.cms.service.ArticleService;
 import com.bobo.cms.service.ChannelService;
+import com.bobo.cms.service.CollectService;
 import com.bobo.cms.service.CompentService;
 import com.bobo.cms.service.SlideService;
 import com.github.pagehelper.PageInfo;
@@ -40,6 +42,8 @@ public class IndexController {
 	private SlideService slideService;
 	@Resource
 	private CompentService compentService;
+	@Resource
+	private CollectService collectService;
 	
 	@RequestMapping(value = {"","/","index"})
 	public String index(Model model,Article article,@RequestParam(defaultValue = "1")Integer page,
@@ -103,7 +107,7 @@ public class IndexController {
 	 * @return: String
 	 */
 	@RequestMapping("articleDetail")
-	public String articleDetail(Model model ,Integer id,@RequestParam(defaultValue = "1")Integer page,@RequestParam(defaultValue = "5")Integer pageSize) {
+	public String articleDetail(Model model ,Integer id,@RequestParam(defaultValue = "1")Integer page,@RequestParam(defaultValue = "5")Integer pageSize,HttpSession session) {
 		//文章内容
 		Article article = articleService.select(id);
 		model.addAttribute("article", article);
@@ -119,8 +123,44 @@ public class IndexController {
 		PageInfo<Article> hotArticles = articleService.selects(hotArticle, 1, 5);
 		model.addAttribute("hotArticles", hotArticles);
 		
+		//查询该文章是否被用户收藏过/从session 获取当前登录用户并根据查询条件获取collect
+		User user = (User) session.getAttribute("user");
+		 if(null!= user) {
+			Collect collect = collectService.selectByTitleAndUserId(article.getTitle(), user.getId());
+			model.addAttribute("collect", collect);
+		 }
+		
 		return "index/article";
 	}
+	
+	
+	
+	
+	@ResponseBody
+	@RequestMapping("collect")
+	 public boolean collect(Collect collect,HttpSession session) {
+		
+		User user = (User) session.getAttribute("user");
+		if(null ==user) {//session过期。
+			return false;
+		}
+		collect.setUser(user);
+		collect.setCreated(new Date());
+		return collectService.insert(collect) >0;
+	 }
+	
+//取消收藏
+	@ResponseBody
+	@RequestMapping("unCollect")
+	public boolean unCollect(Integer  id,HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		if(null ==user) {//session过期。
+			return false;
+		}
+		return collectService.delete(id) >0;
+	}
+	
+	
 	/**
 	 * 
 	 * @Title: addContent 

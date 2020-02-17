@@ -47,12 +47,13 @@
 						</button> --%>
 						<div class="btn-group dropleft">
 							<button type="button"
-								class="btn btn-sm btn-secondary dropdown-toggle" style="background: #222222;border: 0px;padding-bottom: 0px"
+								class="btn btn-sm btn-secondary dropdown-toggle"
+								style="background: #222222; border: 0px; padding-bottom: 0px"
 								data-toggle="dropdown" aria-haspopup="true"
 								aria-expanded="false">${sessionScope.user.username }</button>
 							<div class="dropdown-menu">
-									<a class="dropdown-item" href="/my">个人中心</a></a>
-									 <a	class="dropdown-item" href="/passport/logout">注销</a> 
+								<a class="dropdown-item" href="/my">个人中心</a></a> <a
+									class="dropdown-item" href="/passport/logout">注销</a>
 							</div>
 						</div>
 
@@ -209,105 +210,126 @@
 					</div>
 
 				</div>
-				<!-- 24小时热文 -->
+				<!-- 疫情信息 -->
 				<div class="card" style="width: 18rem;">
-					<div class="card-header" style="text-align: center;">24小时热文</div>
+					<div class="card-header" style="text-align: center;">全国疫情</div>
 					<div class="card-body">
-						<c:forEach items="${hot24ArticleInfo.list}" var="hot24Article">
-							<ul class="list-unstyled">
-								<li class="media"><img src="/pic/${hot24Article.picture }"
-									class="mr-3" alt="..." width="60" height="60">
-									<div class="media-body">
-										<p style="font-size: 14px">
-											<a href="/articleDetail?id=${hot24Article.id}" target="_blank">${hot24Article.title }</a>
-										</p>
-									</div></li>
-							</ul>
-							<hr>
-						</c:forEach>
+						<table class="table">
+							<tr>
+								<td>确诊</td>
+								<td>死亡</td>
+								<td>治愈</td>
+							</tr>
+							<tr>
+								<td style="color: red;font-size: 20px">${ill.number1 }</td>
+								<td style="font-size: 20px">${ill.number2 }</td>
+								<td style="color: green;font-size: 20px">${ill.number3 }</td>
+							</tr>
+						</table>
+						<div align="right"><a href="/ill">详情</a></div>
 					</div>
-				<!-- 最新文章 -->
-				<div class="card" style="width: 18rem;">
-					<div class="card-header" style="text-align: center;">最新文章</div>
-					<div class="card-body">
-						<c:forEach items="${lastInfo.list}" var="lastArticle">
-							<ul class="list-unstyled">
-								<li class="media"><img src="/pic/${lastArticle.picture }"
-									class="mr-3" alt="..." width="60" height="60">
-									<div class="media-body">
-										<p style="font-size: 14px">
-											<a href="/articleDetail?id=${lastArticle.id}" target="_blank">${lastArticle.title }</a>
-										</p>
-									</div></li>
-							</ul>
-							<hr>
-						</c:forEach>
+
+					<!-- 24小时热文 -->
+					<div class="card" style="width: 18rem;">
+						<div class="card-header" style="text-align: center;">24小时热文</div>
+						<div class="card-body">
+							<c:forEach items="${hot24ArticleInfo.list}" var="hot24Article">
+								<ul class="list-unstyled">
+									<li class="media"><img src="/pic/${hot24Article.picture }"
+										class="mr-3" alt="..." width="60" height="60">
+										<div class="media-body">
+											<p style="font-size: 14px">
+												<a href="/articleDetail?id=${hot24Article.id}"
+													target="_blank">${hot24Article.title }</a>
+											</p>
+										</div></li>
+								</ul>
+								<hr>
+							</c:forEach>
+						</div>
+						<!-- 最新文章 -->
+						<div class="card" style="width: 18rem;">
+							<div class="card-header" style="text-align: center;">最新文章</div>
+							<div class="card-body">
+								<c:forEach items="${lastInfo.list}" var="lastArticle">
+									<ul class="list-unstyled">
+										<li class="media"><img src="/pic/${lastArticle.picture }"
+											class="mr-3" alt="..." width="60" height="60">
+											<div class="media-body">
+												<p style="font-size: 14px">
+													<a href="/articleDetail?id=${lastArticle.id}"
+														target="_blank">${lastArticle.title }</a>
+												</p>
+											</div></li>
+									</ul>
+									<hr>
+								</c:forEach>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
 
 
 
 
 
 
-	<!-- 注册的modal-->
-	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-		aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">
-						<span id="myTitle"></span>
-					</h5>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
+			<!-- 注册的modal-->
+			<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+				aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">
+								<span id="myTitle"></span>
+							</h5>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body" id="myModal"></div>
+
+					</div>
 				</div>
-				<div class="modal-body" id="myModal"></div>
-
 			</div>
+
+
+
+
 		</div>
-	</div>
+		<!-- 引入js -->
+		<script type="text/javascript" src="/resource/js/jquery-3.2.1.js"></script>
+		<!-- 引入js -->
+		<script type="text/javascript" src="/resource/js/popper.min.js"></script>
+		<script type="text/javascript" src="/resource/js/bootstrap.min.js"></script>
 
+		<script type="text/javascript">
+			function goPage(page) {
+				var channelId = '${article.channelId}';
+				var categoryId = '${article.categoryId}';
+				location.href = "/?page=" + page + "&channelId=" + channelId
+						+ "&categoryId=" + categoryId
+			}
 
+			//注册
 
+			function reg() {
+				$("#myTitle").text("用户注册");
+				$("#myModal").load("/passport/reg");
+			}
 
-	</div>
-	<!-- 引入js -->
-	<script type="text/javascript" src="/resource/js/jquery-3.2.1.js"></script>
-	<!-- 引入js -->
-	<script type="text/javascript" src="/resource/js/popper.min.js"></script>
-	<script type="text/javascript" src="/resource/js/bootstrap.min.js"></script>
+			//登录
+			function login() {
+				$("#myTitle").text("用户登录");
+				$("#myModal").load("/passport/login");
+			}
 
-	<script type="text/javascript">
-		function goPage(page) {
-			var channelId = '${article.channelId}';
-			var categoryId = '${article.categoryId}';
-			location.href = "/?page=" + page + "&channelId=" + channelId
-					+ "&categoryId=" + categoryId
-		}
-
-		//注册
-
-		function reg() {
-			$("#myTitle").text("用户注册");
-			$("#myModal").load("/passport/reg");
-		}
-
-		//登录
-		function login() {
-			$("#myTitle").text("用户登录");
-			$("#myModal").load("/passport/login");
-		}
-
-		//注销
-		function logout() {
-			location.href = "/passport/logout";
-		}
-	</script>
+			//注销
+			function logout() {
+				location.href = "/passport/logout";
+			}
+		</script>
 </body>
 </html>

@@ -19,12 +19,14 @@ import com.bobo.cms.domain.Category;
 import com.bobo.cms.domain.Channel;
 import com.bobo.cms.domain.Collect;
 import com.bobo.cms.domain.Compent;
+import com.bobo.cms.domain.Ill;
 import com.bobo.cms.domain.Slide;
 import com.bobo.cms.domain.User;
 import com.bobo.cms.service.ArticleService;
 import com.bobo.cms.service.ChannelService;
 import com.bobo.cms.service.CollectService;
 import com.bobo.cms.service.CompentService;
+import com.bobo.cms.service.IllService;
 import com.bobo.cms.service.SlideService;
 import com.github.pagehelper.PageInfo;
 import com.yangchunbo.util.DateUtil;
@@ -44,6 +46,8 @@ public class IndexController {
 	private CompentService compentService;
 	@Resource
 	private CollectService collectService;
+	@Resource
+	private IllService illService;
 	
 	@RequestMapping(value = {"","/","index"})
 	public String index(Model model,Article article,@RequestParam(defaultValue = "1")Integer page,
@@ -91,6 +95,12 @@ public class IndexController {
 		hot24Article.setCreated(DateUtil.subDate(new Date()));//调用工具类，系统时间向前推荐24个小时
 		PageInfo<Article> hot24ArticleInfo = articleService.selects(hot24Article, 1, 4);//24小时热文，默认显示4条
 		model.addAttribute("hot24ArticleInfo", hot24ArticleInfo);
+		
+		
+		// 查询出所有的疫情信息
+		Ill ill = illService.selectTotal();
+		System.out.println("===================>"+ill.getNumber1());
+		model.addAttribute("ill", ill);
 		return "index/index";
 		
 	}
@@ -189,6 +199,20 @@ public class IndexController {
 		
 		
 		return compentService.insert(compent) >0;
+		
+	}
+
+	//疫情信息
+	//12  是湖北的城市ID,默认为湖北省
+	@RequestMapping("ill")
+	public String ill(Model model ,@RequestParam(defaultValue ="12" )Integer pid,@RequestParam(defaultValue = "1")Integer page,@RequestParam(defaultValue = "5")Integer pageSize) {
+		
+		PageInfo<Ill> info = illService.selects(page, pageSize);////查询全国的省的疫情
+		model.addAttribute("info", info);
+		
+		List<Ill> list = illService.selectsByPid(pid);//查询某一个省下面的市的疫情
+		model.addAttribute("list", list);
+		return "index/ill";
 		
 	}
 

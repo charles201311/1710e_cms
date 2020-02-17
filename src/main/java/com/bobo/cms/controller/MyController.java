@@ -21,9 +21,11 @@ import org.springframework.web.multipart.MultipartFile;
 import com.bobo.cms.domain.Article;
 import com.bobo.cms.domain.Category;
 import com.bobo.cms.domain.Channel;
+import com.bobo.cms.domain.Collect;
 import com.bobo.cms.domain.User;
 import com.bobo.cms.service.ArticleService;
 import com.bobo.cms.service.ChannelService;
+import com.bobo.cms.service.CollectService;
 import com.github.pagehelper.PageInfo;
 /**
  * 
@@ -41,6 +43,9 @@ public class MyController {
 	
 	@Resource
 	private ChannelService channelService;
+	
+	@Resource
+	private CollectService collectService;
 	/**
 	 * 
 	 * @Title: index 
@@ -168,6 +173,28 @@ public class MyController {
 		public List<Category> categorys(Integer channelId){
 			return channelService.selectsByCid(channelId);
 			
+		}
+		
+		/**
+		 * 
+		 * @Title: collect 
+		 * @Description: 我 的收藏
+		 * @param page
+		 * @param pageSize
+		 * @param session
+		 * @param model
+		 * @return
+		 * @return: String
+		 */
+		@RequestMapping("collect")
+		public String collect(@RequestParam(defaultValue = "1") Integer page,@RequestParam(defaultValue = "5")Integer pageSize,HttpSession session,Model model) {
+		   User user = (User) session.getAttribute("user");
+		   if(null ==user) {
+			   return "redirect:/my";//sesesion过期
+		   }
+			PageInfo<Collect> info = collectService.selects(user.getId(), page, pageSize);
+			model.addAttribute("info",info);
+			return "my/collect/articles";
 		}
 		
 }

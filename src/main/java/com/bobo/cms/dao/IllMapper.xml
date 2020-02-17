@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bobo.cms.dao.IllMapper">
+
+  <insert id="insert">
+  insert into cms_ill(city_id,number1,number2,number3,pid)
+   values(#{cityId},#{number1},#{number2},#{number3},#{pid})
+  </insert>
+  
+  <select id="selectByCityName" resultType="City">
+   select * from cms_city where cityname=#{cityname}
+  
+  </select>
+  <!-- 查询全国疫情 -->
+  <select id="selectTotal" resultType="Ill">
+  select sum(number1) as number1 ,sum(number2) as number2 ,sum(number3)as number3 from cms_ill
+  
+  </select>
+  
+   <resultMap type="Ill" id="illResultMap">
+   
+    <id column="city_id" property="cityId"/>
+   <result column="number1" property="number1"/>   
+   <result column="number2" property="number2"/>   
+   <result column="number3" property="number3"/>   
+   <result column="pid" property="pid"/>   
+   <!-- 封装省 -->
+   <association property="pro" javaType="City">
+     <id column="id" property="pid"/>
+      <result column="cityname" property="cityname"/>
+   </association>
+   </resultMap>
+  <!-- 各个省的数据 -->
+  <select id="selects" resultMap="illResultMap" >
+  
+  select city_id,SUM(number1) as number1,SUM(number2) as number2 ,SUM(number3)
+ as number3,i.pid ,c.cityname from cms_ill i 
+ left join cms_city c on i.pid =c.id  group by i.pid
+  
+  </select>
+  
+   <!-- 各个省下面的市的数据 -->
+  <select id="selectsByPid" resultMap="illResultMap" >
+  
+ select city_id,SUM(number1) as number1,SUM(number2) as number2 ,SUM(number3)
+ as number3,i.pid ,c.cityname from cms_ill i left join cms_city c
+  on i.city_id =c.id where i.pid=#{pid}  group by i.city_id
+
+  
+  </select>
+</mapper>

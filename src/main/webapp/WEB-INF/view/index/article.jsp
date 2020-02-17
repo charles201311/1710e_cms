@@ -116,7 +116,9 @@ function collect(flag){
 		$.post("/collect",{url:url,text:text},function(result){
 		 	if(result){
 		 		alert("收藏成功");
-		 		location.reload();//刷新当前页面
+		 		
+		 		location.href=url;
+		 		//location.reload();//刷新当前页面
 		 		
 		 	}else{
 		 		alert("收藏失败")

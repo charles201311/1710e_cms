@@ -43,7 +43,7 @@ function unCollect(id){
 	$.post("/unCollect",{id:id},function(flag){
 		
 		if(flag){
-			$("#center").load("/my/collects");
+			$("#center").load("/my/collect");
 		}
 		
 	})
